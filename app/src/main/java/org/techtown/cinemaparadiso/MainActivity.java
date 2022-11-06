@@ -3,6 +3,7 @@ package org.techtown.cinemaparadiso;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Comment;
 
@@ -68,6 +70,26 @@ public class MainActivity extends AppCompatActivity {
         adapter.addItem(new CommentItem("kym71**", "10", "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요."));
 
         listView.setAdapter(adapter);
+
+        Button write_review_btn = (Button) findViewById(R.id.write_review);
+        write_review_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast write_review_toast = Toast.makeText(getApplicationContext(), "버튼이 눌렸습니다.", Toast.LENGTH_LONG);
+                write_review_toast.setGravity(Gravity.TOP|Gravity.LEFT, 200, 200);
+                write_review_toast.show();
+            }
+        });
+
+        Button view_all_btn = (Button) findViewById(R.id.view_all);
+        view_all_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast view_all_toast = Toast.makeText(getApplicationContext(), "버튼이 눌렸습니다.", Toast.LENGTH_LONG);
+                view_all_toast.setGravity(Gravity.TOP|Gravity.LEFT, 200, 200);
+                view_all_toast.show();
+            }
+        });
 
     }
 

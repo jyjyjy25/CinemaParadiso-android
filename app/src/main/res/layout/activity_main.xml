@@ -378,11 +378,11 @@
                     android:layout_width="22dp"
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/review"
+                    android:layout_toLeftOf="@id/write_review"
                     android:src="@drawable/ic_review_selected" />
 
                 <Button
-                    android:id="@+id/review"
+                    android:id="@+id/write_review"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -411,6 +411,7 @@
             </LinearLayout>
 
             <android.widget.Button
+                android:id="@+id/view_all"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="20dp"
