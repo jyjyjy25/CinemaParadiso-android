@@ -4,10 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Comment;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Button likeButton;
@@ -54,6 +60,56 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         dislikeCountView = (TextView) findViewById(R.id.dislikeCountView);
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+
+        CommentAdapter adapter = new CommentAdapter();
+        adapter.addItem(new CommentItem("kym71**", "10", "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요."));
+        adapter.addItem(new CommentItem("kym71**", "10", "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요."));
+
+        listView.setAdapter(adapter);
+
+    }
+
+    class CommentAdapter extends BaseAdapter {
+        ArrayList<CommentItem> items = new ArrayList<CommentItem>();
+
+        @Override
+        public int getCount() {
+            return items.size();
+        }
+
+        public void addItem(CommentItem item) {
+            items.add(item);
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return items.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            CommentItemView Cview = null;
+            if (view == null) {
+                Cview = new CommentItemView(getApplicationContext());
+            } else {
+                Cview = (CommentItemView) view;
+            }
+
+            CommentItem item = items.get(i);
+            Cview.setUser_id(item.getUser_id());
+            Cview.setUser_time(item.getUser_time());
+            Cview.setUser_comment(item.getUser_comment());
+
+            return Cview;
+        }
+
 
     }
 

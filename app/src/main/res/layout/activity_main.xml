@@ -182,6 +182,7 @@
                             style="@style/Widget.AppCompat.RatingBar.Small"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:numStars="5"
                             android:rating="4.5" />
 
@@ -397,8 +398,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </ListView>
 
             </LinearLayout>
 
