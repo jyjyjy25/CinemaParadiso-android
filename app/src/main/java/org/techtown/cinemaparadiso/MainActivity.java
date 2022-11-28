@@ -1,27 +1,34 @@
 package org.techtown.cinemaparadiso;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    public static CommentAdapter adapter;
     Button likeButton;
     Button dislikeButton;
     TextView likeCountView;
     TextView dislikeCountView;
+    ListView listView;
 
     int likeCount = 15;
     int dislikeCount = 1;
@@ -63,21 +70,19 @@ public class MainActivity extends AppCompatActivity {
         });
         dislikeCountView = (TextView) findViewById(R.id.dislikeCountView);
 
-        ListView listView = (ListView) findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.listView);
 
-        CommentAdapter adapter = new CommentAdapter();
-        adapter.addItem(new CommentItem("kym71**", "10", "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요."));
-        adapter.addItem(new CommentItem("kym71**", "10", "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요."));
+        adapter = new CommentAdapter();
+        adapter.addItem(new CommentItem("kym71**", "10", "적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요.", 5));
+        adapter.addItem(new CommentItem("angel**", "15", "웃긴 내용보다는 좀 더 진지한 영화.", 4.5F));
 
         listView.setAdapter(adapter);
 
-        Button write_review_btn = (Button) findViewById(R.id.write_review);
+        Button write_review_btn = (Button) findViewById(R.id.write_review_button);
         write_review_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast write_review_toast = Toast.makeText(getApplicationContext(), "버튼이 눌렸습니다.", Toast.LENGTH_LONG);
-                write_review_toast.setGravity(Gravity.TOP|Gravity.LEFT, 200, 200);
-                write_review_toast.show();
+                showCommentWriteActivity();
             }
         });
 
@@ -85,13 +90,38 @@ public class MainActivity extends AppCompatActivity {
         view_all_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast view_all_toast = Toast.makeText(getApplicationContext(), "버튼이 눌렸습니다.", Toast.LENGTH_LONG);
-                view_all_toast.setGravity(Gravity.TOP|Gravity.LEFT, 200, 200);
-                view_all_toast.show();
+                Intent intent = new Intent(getApplicationContext(), CommentAllViewActivity.class);
+                startActivity(intent);
             }
         });
 
     }
+
+    public void showCommentWriteActivity() {
+        Intent intent = new Intent(getApplicationContext(), CommentWriteActivity.class);
+        startActivityResult.launch(intent);
+    }
+
+    ActivityResultLauncher<Intent> startActivityResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        if (result != null) {
+                            Intent intent = result.getData();
+
+                            float rating = intent.getFloatExtra("rating", 1.5f);
+                            String contents = intent.getStringExtra("contents");
+
+                            // ListView에 추가
+                            adapter.addItem(new CommentItem("angel**", "15", contents, rating));
+                            adapter.notifyDataSetChanged();
+                            listView.setAdapter(adapter);
+                        }
+                    }
+                }
+            });
 
     class CommentAdapter extends BaseAdapter {
         ArrayList<CommentItem> items = new ArrayList<CommentItem>();
@@ -103,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
         public void addItem(CommentItem item) {
             items.add(item);
+            this.notifyDataSetChanged();
         }
 
         @Override
@@ -128,11 +159,10 @@ public class MainActivity extends AppCompatActivity {
             Cview.setUser_id(item.getUser_id());
             Cview.setUser_time(item.getUser_time());
             Cview.setUser_comment(item.getUser_comment());
+            Cview.setUser_rating(item.getUser_rating());
 
             return Cview;
         }
-
-
     }
 
     public void incrLikeCount() {

@@ -201,7 +201,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="#D3D3D3" />
+                    android:background="@drawable/separator" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -378,11 +378,11 @@
                     android:layout_width="22dp"
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/write_review"
+                    android:layout_toLeftOf="@id/write_review_button"
                     android:src="@drawable/ic_review_selected" />
 
                 <Button
-                    android:id="@+id/write_review"
+                    android:id="@+id/write_review_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

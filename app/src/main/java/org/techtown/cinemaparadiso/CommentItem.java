@@ -5,11 +5,13 @@ public class CommentItem {
     String user_id;
     String user_time;
     String user_comment;
+    float user_rating;
 
-    public CommentItem(String user_id, String user_time, String user_comment) {
+    public CommentItem(String user_id, String user_time, String user_comment, float user_rating) {
         this.user_id = user_id;
         this.user_time = user_time;
         this.user_comment = user_comment;
+        this.user_rating = user_rating;
     }
 
     public String getUser_id() {
@@ -35,4 +37,13 @@ public class CommentItem {
     public void setUser_comment(String user_comment) {
         this.user_comment = user_comment;
     }
+
+    public float getUser_rating() {
+        return user_rating;
+    }
+
+    public void setUser_rating(float user_rating) {
+        this.user_rating = user_rating;
+    }
+
 }
